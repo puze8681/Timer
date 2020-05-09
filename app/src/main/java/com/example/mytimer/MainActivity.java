@@ -10,6 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.service.autofill.TextValueSanitizer;
 import android.util.Log;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         btn_delete=findViewById(R.id.btn_delete);
         recycler=findViewById(R.id.recycler_main);
         prefUtil = new PrefUtil(this);
+        startSound(getApplicationContext());
     }
 
     public void mOnClick(View v){
@@ -105,5 +110,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         setRecyclerView(prefUtil);
+    }
+
+    public void startSound(Context context) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.alarm);
+        mediaPlayer.start();
+        Log.d("LOGTAG", "startSound");
     }
 }

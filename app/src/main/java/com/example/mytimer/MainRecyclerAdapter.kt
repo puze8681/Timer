@@ -2,8 +2,7 @@ package com.example.mytimer
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.media.RingtoneManager
-import android.net.Uri
+import android.media.MediaPlayer
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Message
@@ -142,11 +141,8 @@ class MainRecyclerAdapter(var items: ArrayList<MainData>, var context: Context, 
         }
 
         fun startSound(context: Context?) {
-            //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            val notification = Uri.parse("android.resource://com.example.mytimer/raw/alarm.mp3")
-            val r = RingtoneManager.getRingtone(context, notification)
-            r.play()
+            val mediaPlayer = MediaPlayer.create(context, R.raw.alarm)
+            mediaPlayer.start()
             Log.d("LOGTAG", "startSound")
         }
 

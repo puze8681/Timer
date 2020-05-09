@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -308,11 +309,8 @@ public class CountDown extends AppCompatActivity {
     }
 
     public void startSound(Context context) {
-        //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        Uri notification = Uri.parse("android.resource://com.example.mytimer/raw/alarm.mp3");
-        Ringtone r = RingtoneManager.getRingtone(context, notification);
-        r.play();
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.alarm);
+        mediaPlayer.start();
         Log.d("LOGTAG", "startSound");
     }
 }
