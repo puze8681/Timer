@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:background="#fff"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+    <View
+        android:background="#ededed"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+    <TextView
+        android:id="@+id/item_type"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ffffff"
+        android:gravity="center|left"
+        android:text="타이머 이름"
+        android:textColor="#000000"
+        android:textSize="32sp" />
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:text="타이머 이름"
+        android:textColor="#000000"
+        android:textSize="40dp" />
+    <TextView
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:id="@+id/item_time"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:text="00 : 00 : 00"
+        android:textColor="#000000"
+        android:textSize="55dp" />
+    <View
+        android:background="#ededed"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+</LinearLayout>
