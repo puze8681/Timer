@@ -26,6 +26,10 @@ class MainRecyclerAdapter(var items: ArrayList<MainData>, var context: Context, 
         holder.itemView.setOnClickListener {
             itemClick?.onItemClick(holder.itemView, position)
         }
+        holder.itemView.setOnLongClickListener {
+            longClick?.onLongClick(holder.itemView, position)
+            true
+        }
     }
 
     override fun getItemCount(): Int = items.size
@@ -163,11 +167,16 @@ class MainRecyclerAdapter(var items: ArrayList<MainData>, var context: Context, 
     }
 
     var itemClick: ItemClick? = null
+    var longClick: LongClick? = null
 
     interface ItemClick {
         fun onItemClick(view: View?, position: Int)
     }
-    
+
+    interface LongClick {
+        fun onLongClick(view: View?, position: Int)
+    }
+
     fun getSize(): Int{
         return items.size
     }

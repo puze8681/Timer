@@ -20,6 +20,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
@@ -75,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setRecyclerView(PrefUtil prefUtil) {
-        ArrayList<MainData> mainData = new ArrayList<>();
+    public void setRecyclerView(final PrefUtil prefUtil) {
+        final ArrayList<MainData> mainData = new ArrayList<>();
         ArrayList<String> alarmNameList = prefUtil.getStringArrayPref(prefUtil.getALARM_NAME());
         ArrayList<Long> alarmTimeList = prefUtil.getLongArrayPref(prefUtil.getALARM_TIME());
         ArrayList<String> stopNameList = prefUtil.getStringArrayPref(prefUtil.getSTOP_NAME());
@@ -97,6 +100,31 @@ public class MainActivity extends AppCompatActivity {
         Log.d("mainAdapter", String.valueOf(mainAdapter.getSize()));
         recycler.setAdapter(mainAdapter);
         recycler.getAdapter().notifyDataSetChanged();
+        mainAdapter.setLongClick(new MainRecyclerAdapter.LongClick() {
+            @Override
+            public void onLongClick(@Nullable View view, int position) {
+                switch (mainData.get(position).getType()){
+                    case 0:
+                        prefUtil.deleteStringArrayPref(prefUtil.getALARM_NAME(),mainData.get(position).getName());
+                        prefUtil.deleteLongArrayPref(prefUtil.getALARM_TIME(),mainData.get(position).getTime());
+                        Toast.makeText(getApplicationContext(),"알람 삭제."+mainData.get(position).getName()+mainData.get(position).getTime(), Toast.LENGTH_LONG).show();
+                        setRecyclerView(prefUtil);
+                        break;
+                    case 1:
+                        prefUtil.deleteStringArrayPref(prefUtil.getSTOP_NAME(),mainData.get(position).getName());
+                        prefUtil.deleteLongArrayPref(prefUtil.getSTOP_TIME(),mainData.get(position).getTime());
+                        Toast.makeText(getApplicationContext(),"스톱워치 삭제."+mainData.get(position).getName()+mainData.get(position).getTime(), Toast.LENGTH_LONG).show();
+                        setRecyclerView(prefUtil);
+                        break;
+                    case 2:
+                        Toast.makeText(getApplicationContext(),"카운트다운은 삭제 불가."+mainData.get(position).getName()+mainData.get(position).getTime(), Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        Toast.makeText(getApplicationContext(),"예외입니다."+mainData.get(position).getName()+mainData.get(position).getTime(), Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        });
     }
 
     @Override
