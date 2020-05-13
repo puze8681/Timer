@@ -22,7 +22,7 @@ import android.widget.Toast;
 import java.util.Locale;
 
 public class CountDown extends AppCompatActivity {
-    private EditText mEditTextInput, editCount, editRepeat;
+    private EditText mEditTextInput, mEditTextInputSecond, editCount, editRepeat;
     private TextView mTextViewCountDown,txt, textRepeat;
     private Button mButtonSet;
     private Button mButtonStartPause;
@@ -31,6 +31,7 @@ public class CountDown extends AppCompatActivity {
     private CountDownTimer mCountDownTimer;
     private long temp;
     private String input;
+    private String input2;
     public boolean mTimerRunning;
     private boolean mTimerWrite=false;
     private long mStartTimeInMillis;
@@ -48,6 +49,7 @@ public class CountDown extends AppCompatActivity {
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         editor = prefs.edit();
         mEditTextInput = findViewById(R.id.edit_text_input);
+        mEditTextInputSecond = findViewById(R.id.edit_text_input_second);
         editCount = findViewById(R.id.edit_count);
         editRepeat = findViewById(R.id.edit_repeat);
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
@@ -64,18 +66,21 @@ public class CountDown extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mEditTextInput.setText("5");
+                mEditTextInputSecond.setText("0");
             }
         });
         btn_10min.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mEditTextInput.setText("10");
+                mEditTextInputSecond.setText("0");
             }
         });
         btn_30min.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mEditTextInput.setText("30");
+                mEditTextInputSecond.setText("0");
             }
         });
         mButtonSet.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +88,7 @@ public class CountDown extends AppCompatActivity {
             public void onClick(View v) {
                 //String input="";
                     input = mEditTextInput.getText().toString();
+                    input2 = mEditTextInputSecond.getText().toString();
                     //txt.setText(input);
                     //System.out.println(txt);
                 if (input.length() == 0) {
@@ -90,7 +96,12 @@ public class CountDown extends AppCompatActivity {
                     return;
                 }
 
-                long millisInput = Long.parseLong(input) * 60000;
+                if (input2.length() == 0) {
+                    Toast.makeText(CountDown.this, "Field2 can't be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                long millisInput = (Long.parseLong(input) * 60000) + (Long.parseLong(input2) * 1000);
                 if (millisInput == 0) {
                     Toast.makeText(CountDown.this, "Please enter a positive number", Toast.LENGTH_SHORT).show();
                     return;
@@ -109,6 +120,7 @@ public class CountDown extends AppCompatActivity {
                 editor.putInt("currentCount", 1);
                 setTime(millisInput);
                 mEditTextInput.setText("");
+                mEditTextInputSecond.setText("");
             }
         });
 
@@ -178,6 +190,7 @@ public class CountDown extends AppCompatActivity {
         editor.putInt("currentCount", 1);
         editRepeat.setVisibility(View.VISIBLE);
         mEditTextInput.setVisibility(View.VISIBLE);
+        mEditTextInputSecond.setVisibility(View.VISIBLE);
         mButtonSet.setVisibility(View.VISIBLE);
         mTimeLeftInMillis = mStartTimeInMillis;
         updateCountDownText();
@@ -227,6 +240,7 @@ public class CountDown extends AppCompatActivity {
         Log.d("LOGTAG, COUNTDOWN, updataWatchInterface", String.valueOf(mTimerRunning));
         if (mTimerRunning) {
             mEditTextInput.setVisibility(View.INVISIBLE);
+            mEditTextInputSecond.setVisibility(View.INVISIBLE);
             editRepeat.setVisibility(View.INVISIBLE);
             mButtonSet.setVisibility(View.INVISIBLE);
             mButtonReset.setVisibility(View.INVISIBLE);

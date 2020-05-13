@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         btn_delete=findViewById(R.id.btn_delete);
         recycler=findViewById(R.id.recycler_main);
         prefUtil = new PrefUtil(this);
-        startSound(getApplicationContext());
     }
 
     public void mOnClick(View v){
@@ -110,11 +109,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         setRecyclerView(prefUtil);
-    }
-
-    public void startSound(Context context) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.alarm);
-        mediaPlayer.start();
-        Log.d("LOGTAG", "startSound");
     }
 }
